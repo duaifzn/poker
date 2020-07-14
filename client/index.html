@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poke</title>
+</head>
+
+<body>
+  <button onclick="create()" id="cc">channel</button>
+  <button onclick="message()" id="dd">ready</button>
+</body>
+
+</html>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  let socket = io('http://localhost:3000')
+  socket.on('connect', () => {
+    console.log('connect')
+  })
+  socket.on('state', data => {
+    console.log(data)
+  })
+  function create() {
+    let a = document.getElementById('cc').innerHTML
+    console.log(a)
+    socket.emit('create', a)
+  }
+  function message() {
+    let a = document.getElementById('dd').innerHTML
+    console.log(a)
+    socket.emit('ready', 'asd')
+  }
+
+</script>
