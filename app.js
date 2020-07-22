@@ -26,16 +26,17 @@ io.on('connection', socket => {
     let gameService = gameServiceRepository.findById(room)
     if (!gameService) {
       gameService = new GameService(room)
-      console.log(gameService)
+
       gameServiceRepository.insert(gameService)
     }
     gameService.handleMessage(socket.id, 'login')
+    socket.emit('setId', { socketId: socket.id, signIn: true })
 
     socket.use(packet => {
       const ROOM = room
       gameService.handleMessage(socket.id, packet[0], packet[1])
       let data = gameService.getClientResponse()
-      console.log(data)
+
       if (data) {
         io.to(ROOM).emit('state', data);
       }

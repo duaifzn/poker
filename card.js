@@ -26,4 +26,7 @@ module.exports = class Card {
     else if (this.value === 'Queen') this.score = 0.5
     else if (this.value === 'King') this.score = 0.5
   }
+  resetOwner() {
+    this.owner = null
+  }
 }
