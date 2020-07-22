@@ -10,7 +10,7 @@ module.exports = class GameService {
     this.order = []
     this.nowOrder = 0
     this.gameOver = false
-    this.position = []
+
   }
   init() {
     this.gameOver = false
@@ -57,14 +57,12 @@ module.exports = class GameService {
     if (type === 'login') {
       this.players[socketId] = new Player
       this.order.push(socketId)
-      this.position.push(socketId)
     }
     else if (type === 'ready') {
       this.players[socketId].ready = true
       if (this.beginCheck() === true) {
         this.players['banker'] = new Player
         this.order.push('banker')
-        this.position.push('banker')
         this.init()
       }
     }
@@ -156,7 +154,6 @@ module.exports = class GameService {
       order: this.order,
       nowOrder: this.nowOrder,
       gameOver: this.gameOver,
-      position: this.position
     }
   }
 

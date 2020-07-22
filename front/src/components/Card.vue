@@ -32,6 +32,7 @@ export default {
   float: left;
   width: 105px;
   height: 150px;
+  transform-style: preserve-3d;
   backface-visibility: hidden;
 }
 .back {

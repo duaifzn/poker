@@ -45,24 +45,24 @@
       <Player v-if="ready && order.length >= 3" class="player2">
         <Card
           class="cards"
-          v-for="(item,index) in players[position[1]].cards"
+          v-for="(item,index) in players[order[player2pos]].cards"
           :key="index"
           :item="item"
           :timeline="timeline"
           :socket="socket"
-          :socketId="position[1]"
+          :socketId="order[player2pos]"
           :players="players"
         ></Card>
       </Player>
       <Player v-if="ready && order.length == 4" class="player3">
         <Card
           class="cards"
-          v-for="(item,index) in players[position[2]].cards"
+          v-for="(item,index) in players[order[player3pos]].cards"
           :key="index"
           :item="item"
           :timeline="timeline"
           :socket="socket"
-          :socketId="position[2]"
+          :socketId="order[player3pos]"
           :players="players"
         ></Card>
       </Player>
@@ -91,7 +91,8 @@ export default {
       order: [],
       nowOrder: 0,
       gameOver: false,
-      position: [],
+      player2pos: 1,
+      player3pos: 1,
       deckCards: {
         position: "absolute"
       }
@@ -120,7 +121,6 @@ export default {
       this.order = data.order;
       this.nowOrder = data.nowOrder;
       this.gameOver = data.gameOver;
-      this.position = data.position;
     },
     sortDeckCard: function(id) {
       return this.deck.filter(element => element.owner == id);
@@ -134,6 +134,17 @@ export default {
       this.stateResponse(data);
       if (this.players["banker"].turn === true) {
         this.socket.emit("bankerDraw");
+      }
+
+      if (this.order[0] === this.socketId) {
+        this.player2pos = 1;
+        this.player3pos = 2;
+      } else if (this.order[1] === this.socketId) {
+        this.player2pos = 0;
+        this.player3pos = 2;
+      } else if (this.order[2] === this.socketId) {
+        this.player2pos = 0;
+        this.player3pos = 1;
       }
     });
     this.socket.on("setId", data => {
