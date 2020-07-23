@@ -6,6 +6,15 @@
 1) Build 
 ``` 
 npm install
-npm run build
+``` 
+2) front-end
+```
+cd front
+npm run serve
+```
+3) beack-end
+```
 node app.js
+```
+
 
