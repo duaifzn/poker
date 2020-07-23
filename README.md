@@ -1,4 +1,4 @@
-**多人連線十點半 Node.js , Vue**
+**十點半遊戲 Node.js socket.io Vue**
 
 **Set up development environment**
 
@@ -7,6 +7,5 @@
 ``` 
 npm install
 npm run build
-``` 
 node app.js
-``` 
+
