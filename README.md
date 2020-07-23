@@ -7,7 +7,7 @@
 ``` 
 npm install
 ``` 
-2) front-end
+2) front-end localhost:8080
 ```
 cd front
 npm run serve
