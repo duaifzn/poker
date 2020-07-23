@@ -9,7 +9,7 @@ export default {
   mounted: function () {
     this.timeline = gsap.timeline()
     this.player1 = {
-      x: 150, y: 150
+      x: 400, y: 200
     }
   }
 }

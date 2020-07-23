@@ -15,6 +15,7 @@
           :socketId="socketId"
           :players="players"
           v-bind:style="deckCards"
+          :player1="player1"
         ></Card>
       </Player>
       <Player v-if="ready" class="bankercard">

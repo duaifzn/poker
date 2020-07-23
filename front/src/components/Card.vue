@@ -6,7 +6,7 @@
 <script>
 export default {
   name: "Card",
-  props: ["timeline", "item", "socket", "socketId", "players"],
+  props: ["timeline", "item", "socket", "socketId", "players", "player1"],
   data: function() {
     return {};
   },
@@ -16,12 +16,16 @@ export default {
         this.players[this.socketId].turn === true &&
         this.item.owner === null
       ) {
-        //const { move } = this.$refs;
-        this.socket.emit("draw");
-        // this.timeline.to(move, 1, {
-        //   x: this.player1.x,
-        //   y: this.player1.y
-        // });
+        const { move } = this.$refs;
+        this.timeline
+          .to(move, 0.2, {
+            x: this.player1.x,
+            y: this.player1.y
+          })
+          .then(() => {
+            this.player1.x += 50;
+            this.socket.emit("draw");
+          });
       }
     }
   }
@@ -29,10 +33,9 @@ export default {
 </script>
 <style scoped>
 .Card {
-  float: left;
+  display: inline-block;
   width: 105px;
   height: 150px;
-  transform-style: preserve-3d;
   backface-visibility: hidden;
 }
 .back {
