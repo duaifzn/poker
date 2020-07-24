@@ -7,14 +7,14 @@
 ``` 
 npm install
 ``` 
-2) front-end localhost:8080
+2) front-end 
 ```
 cd front
-npm run serve
+npm run build
 ```
-3) beack-end
+3) back-end
 ```
-node app.js
+npm run start
 ```
 
 
