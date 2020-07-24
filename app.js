@@ -4,11 +4,12 @@ const port = 3000
 const server = require('http').createServer(app)
 const GameServiceRepository = require('./gameServiceRepository')
 const GameService = require('./gameService')
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/client/index.html')
-})
-app.use('/client', express.static(__dirname + '/client'))
+const path = require('path')
+// app.get('/', (req, res) => {
+//   res.sendFile(__dirname + '/client/index.html')
+// })
+// app.use('/client', express.static(__dirname + '/client'))
+app.use(express.static(path.join(__dirname, '/front/dist')))
 
 server.listen(port, () => {
   console.log("server running")
