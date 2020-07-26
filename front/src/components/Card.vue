@@ -11,9 +11,7 @@ export default {
   name: "Card",
   props: ["timeline", "item", "socket", "socketId", "players", "player1"],
   data: function () {
-    return {
-      flip: false,
-    };
+    return {};
   },
   methods: {
     move: function () {
@@ -32,6 +30,7 @@ export default {
       }
     },
   },
+  computed: {},
 };
 </script>
 <style scoped>

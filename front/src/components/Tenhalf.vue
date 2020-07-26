@@ -2,8 +2,13 @@
   <div class="Tenhalf">
     <Login :socket="socket" v-if="!signIn"></Login>
     <Table v-if="signIn">
-      <button v-if="!ready" @click="Ready">ready</button>
-      <button v-if="gameOver" class="again" @click="Again">again</button>
+      <button v-if="!ready" @click="Ready" class="ready-btn">ready</button>
+      <div v-if="gameOver" class="again">
+        <h1 v-if="players[socketId].won" class="result">win</h1>
+        <h1 v-if="!players[socketId].won" class="result">lose</h1>
+        <button @click="Again" class="again-btn">again</button>
+      </div>
+
       <Player v-if="ready" class="banker">
         <Card
           class="cards"
@@ -29,6 +34,7 @@
           :socketId="socketId"
           :players="players"
           :style="playerCard"
+          :class="{'first-card': index === 0 && gameOver === false}"
         ></Card>
       </Player>
       <Player v-if="ready" class="player1">
@@ -42,8 +48,9 @@
           :socketId="socketId"
           :players="players"
           :style="playerCard"
+          :class="{'b':players[socketId].turn === true}"
         ></Card>
-        <button v-if="players[socketId].turn" @click="pass">pass</button>
+        <button v-if="players[socketId].turn" @click="pass" class="pass-btn">pass</button>
       </Player>
       <Player v-if="ready && order.length >= 3" class="player2">
         <Card
@@ -56,6 +63,7 @@
           :socketId="order[player2pos]"
           :players="players"
           :style="playerCard"
+          :class="{'first-card': index === 0 && gameOver === false, 'b':players[order[player2pos]].turn === true}"
         ></Card>
       </Player>
       <Player v-if="ready && order.length == 4" class="player3">
@@ -69,6 +77,7 @@
           :socketId="order[player3pos]"
           :players="players"
           :style="playerCard"
+          :class="{'first-card': index === 0 && gameOver === false,'b':players[order[player3pos]].turn === true}"
         ></Card>
       </Player>
     </Table>
@@ -165,7 +174,7 @@ export default {
 };
 </script>
 <style scoped>
-button {
+.ready-btn {
   position: relative;
   border: solid 1px #000000;
   border-radius: 20px;
@@ -175,7 +184,18 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
+.pass-btn {
+  border: solid 1px #000000;
+  border-radius: 20px;
+  width: 15%;
+  height: 40px;
+  right: 0;
+}
+.again-btn {
+  border: solid 1px #000000;
+  border-radius: 10px;
+  height: 40px;
+}
 .banker {
   position: absolute;
   top: 50%;
@@ -206,6 +226,16 @@ button {
   border: solid 1px #000000;
 }
 .again {
+  text-align: center;
   z-index: 2;
+}
+.first-card {
+  transform: rotateY(180deg);
+}
+.b {
+  border: 5px solid yellow;
+}
+.result {
+  color: red;
 }
 </style>
