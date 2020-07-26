@@ -5,12 +5,12 @@
 </template>
 <script>
 export default {
-  name: "Player"
+  name: "Player",
 };
 </script>
 <style scoped>
 .Player {
-  width: 30%;
+  width: 50%;
   height: 100px;
 }
 </style>

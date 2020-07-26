@@ -14,7 +14,7 @@
           :socket="socket"
           :socketId="socketId"
           :players="players"
-          v-bind:style="deckCards"
+          :style="deckCards"
           :player1="player1"
         ></Card>
       </Player>
@@ -28,6 +28,7 @@
           :socket="socket"
           :socketId="socketId"
           :players="players"
+          :style="playerCard"
         ></Card>
       </Player>
       <Player v-if="ready" class="player1">
@@ -40,6 +41,7 @@
           :socket="socket"
           :socketId="socketId"
           :players="players"
+          :style="playerCard"
         ></Card>
         <button v-if="players[socketId].turn" @click="pass">pass</button>
       </Player>
@@ -53,6 +55,7 @@
           :socket="socket"
           :socketId="order[player2pos]"
           :players="players"
+          :style="playerCard"
         ></Card>
       </Player>
       <Player v-if="ready && order.length == 4" class="player3">
@@ -65,6 +68,7 @@
           :socket="socket"
           :socketId="order[player3pos]"
           :players="players"
+          :style="playerCard"
         ></Card>
       </Player>
     </Table>
@@ -80,7 +84,7 @@ import mixinGsap from "../../mixins/gsap";
 export default {
   name: "Tenhalf",
   props: ["socket"],
-  data: function() {
+  data: function () {
     return {
       signIn: false,
       ready: false,
@@ -95,8 +99,12 @@ export default {
       player2pos: 1,
       player3pos: 1,
       deckCards: {
-        position: "absolute"
-      }
+        position: "absolute",
+        transform: "rotateY(180deg)",
+      },
+      playerCard: {
+        float: "left",
+      },
     };
   },
   mixins: [mixinGsap],
@@ -104,16 +112,16 @@ export default {
     Login,
     Table,
     Card,
-    Player
+    Player,
   },
   methods: {
-    Ready: function() {
+    Ready: function () {
       this.socket.emit("ready");
     },
-    Again: function() {
+    Again: function () {
       this.socket.emit("again");
     },
-    stateResponse: function(data) {
+    stateResponse: function (data) {
       this.ready = data.players[this.socketId].ready;
       this.id = data.id;
       this.deck = data.deck.reverse();
@@ -123,15 +131,16 @@ export default {
       this.nowOrder = data.nowOrder;
       this.gameOver = data.gameOver;
     },
-    sortDeckCard: function(id) {
-      return this.deck.filter(element => element.owner == id);
+    sortDeckCard: function (id) {
+      return this.deck.filter((element) => element.owner == id);
     },
-    pass: function() {
+    pass: function () {
       this.socket.emit("pass");
-    }
+    },
   },
-  mounted: function() {
-    this.socket.on("state", data => {
+
+  mounted: function () {
+    this.socket.on("state", (data) => {
       this.stateResponse(data);
       if (this.players["banker"].turn === true) {
         this.socket.emit("bankerDraw");
@@ -148,11 +157,11 @@ export default {
         this.player3pos = 1;
       }
     });
-    this.socket.on("setId", data => {
+    this.socket.on("setId", (data) => {
       this.socketId = data.socketId;
       this.signIn = data.signIn;
     });
-  }
+  },
 };
 </script>
 <style scoped>
