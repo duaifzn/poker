@@ -217,7 +217,7 @@ export default {
 }
 .player2 {
   position: absolute;
-  left: 5%;
+
   border: solid 1px #000000;
 }
 .player3 {
@@ -226,8 +226,11 @@ export default {
   border: solid 1px #000000;
 }
 .again {
+  position: absolute;
   text-align: center;
+  width: 100%;
   z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .first-card {
   transform: rotateY(180deg);

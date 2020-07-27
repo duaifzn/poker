@@ -45,7 +45,6 @@ module.exports = class GameService {
       this.players[player].score = score
     }
 
-
   }
   beginCheck() {
     for (let player in this.players) {
@@ -92,7 +91,7 @@ module.exports = class GameService {
 
     }
     else if (type === 'bankerDraw') {
-      if (this.players["banker"].score <= 8 && this.players["banker"].cards.length < 5) {
+      if (this.players["banker"].score < 8 && this.players["banker"].cards.length < 5) {
 
         this.deck.deck[this.nextCardPosition].setOwner("banker")
         this.nextCardPosition++
@@ -112,18 +111,19 @@ module.exports = class GameService {
           }
         }
       }
-      else if (this.players["banker"].score > 8) {
+      else {
         for (let player in this.players) {
-          if (this.players["banker"].score >= this.players[player].score) {
+          if (this.players["banker"].score >= this.players[player].score && this.players[player].won === null) {
             this.players[player].won = false
           }
-          else {
+          else if (this.players["banker"].score < this.players[player].score && this.players[player].won === null) {
             this.players[player].won = true
           }
         }
         this.players["banker"].turn = false
         this.gameOver = true
       }
+
 
 
 
